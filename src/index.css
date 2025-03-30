@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+}
+.code {
+  font-family: "Space Mono", monospace !important;
+}
+.split {
+  display: flex;
+  height: 100%;
+  flex-grow: 1;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.gutter {
+  cursor: ew-resize;
+  background-color: #eee;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+.gutter.gutter-horizontal {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
+  cursor: col-resize;
+}
+
+.directions {
+  position: absolute;
+  width: 275px;
+  top: 0px;
+  right: 0px;
+  padding: 1.25rem;
+  padding-top: 0px;
+  margin: 0.25rem;
+  color: white;
+  background-color: #2d3748;
+  border-radius: 0.25rem;
+}
+
+.react-flow__handle.target {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+}
+.react-flow__handle.source {
+  width: 10px;
+  height: 10px;
+  background-color: green;
+}
+#visualization {
+  width: 600px;
+  height: 400px;
+  border: 1px solid lightgray;
+}
