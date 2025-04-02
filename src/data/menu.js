@@ -46,6 +46,7 @@ import InfiniteScroll from "../pages/tables/InfiniteScroll";
 import BasicTimeLine from "../pages/timelinme/BasicTimeLine";
 import CodeEditor from "../pages/code-editor/CodeEditor";
 import ShapeFile from "../pages/maps/ShapeFile";
+import AnimatedRoutes from "../pages/maps/AnimatedRoutes";
 
 const menu = [
   {
@@ -94,6 +95,12 @@ const menu = [
         route: "shape-files",
         children: [],
         component: ShapeFile,
+      },
+      {
+        name: "Animated Routes",
+        route: "animated-routes",
+        children: [],
+        component: AnimatedRoutes,
       },
     ],
   },
@@ -153,24 +160,6 @@ const menu = [
         route: "sticky-column",
         children: [],
         component: StickyColumn,
-      },
-      {
-        name: "Column Sizing",
-        route: "column-sizing",
-        children: [],
-        component: StickyColumn,
-      },
-      {
-        name: "Column Visibility",
-        route: "column-visibility",
-        children: [],
-        component: ColumnVisibility,
-      },
-      {
-        name: "Column Filtering",
-        route: "column-filtering",
-        children: [],
-        component: ColumnFiltering,
       },
       {
         name: "Global Filtering",

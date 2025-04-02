@@ -1,10 +1,9 @@
 import React from 'react'
+import PreviewLayout from '../../../layouts/PreviewLayout';
 
 const PaginationPreview = () => {
   return (
-    <div>
-      PaginationPreview
-    </div>
+    <PreviewLayout preview={<>hejw</>}/>
   )
 }
 

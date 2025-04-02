@@ -1,8 +1,9 @@
 import React from "react";
 import PreviewLayout from "../../layouts/PreviewLayout";
+import StickyColumnPreview from "../../components/tables/sticky-column/StickyColumnPreview";
 
 const StickyColumn = () => {
-  return <PreviewLayout preview={<>sticky column</>} />;
+  return <PreviewLayout preview={<StickyColumnPreview />} />;
 };
 
 export default StickyColumn;
