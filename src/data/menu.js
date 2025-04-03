@@ -47,6 +47,8 @@ import BasicTimeLine from "../pages/timelinme/BasicTimeLine";
 import CodeEditor from "../pages/code-editor/CodeEditor";
 import ShapeFile from "../pages/maps/ShapeFile";
 import AnimatedRoutes from "../pages/maps/AnimatedRoutes";
+import BasicCanvas from "../pages/canvas/BasicCanvas";
+import CanvasSprite from "../pages/canvas/CanvasSprite";
 
 const menu = [
   {
@@ -481,6 +483,13 @@ const menu = [
         name: "Basic Canvas",
         route: "basic-canvas",
         children: [],
+        component: BasicCanvas,
+      },
+      {
+        name: "Canvas Sprite",
+        route: "canvas-sprite",
+        children: [],
+        component: CanvasSprite,
       },
       {
         name: "Canvas with Shapes",
