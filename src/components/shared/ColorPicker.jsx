@@ -12,10 +12,10 @@ import React, { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import CheckIcon from "@mui/icons-material/Check";
 
-const ColorPicker = ({ sx, stateColor, setColorState }) => {
+const ColorPicker = ({ sx, color, setColor }) => {
   const [colorPickerAnchorEl, setColorPickerAnchorEl] = useState(null);
   const colorPickerOpen = Boolean(colorPickerAnchorEl);
-  const [inputColor, setInputColor] = useState(stateColor);
+  const [inputColor, setInputColor] = useState(color.replace("#", ""));
 
   const handleColorpickerOpen = (event) => {
     setColorPickerAnchorEl(event.currentTarget);
@@ -23,6 +23,14 @@ const ColorPicker = ({ sx, stateColor, setColorState }) => {
 
   const handleColorpickerClose = () => {
     setColorPickerAnchorEl(null);
+    // Sync inputColor with the current color when closing
+    setInputColor(color.replace("#", ""));
+  };
+
+  const handleColorConfirm = () => {
+    const newColor = `#${inputColor}`;
+    setColor(newColor);
+    handleColorpickerClose();
   };
 
   return (
@@ -31,12 +39,12 @@ const ColorPicker = ({ sx, stateColor, setColorState }) => {
       <IconButton
         onClick={handleColorpickerOpen}
         sx={{
-          backgroundColor: stateColor,
+          backgroundColor: color,
           width: sx?.width || 24,
           height: sx?.height || 24,
           borderRadius: sx?.borderRadius || "50%",
           border: "2px solid #ccc",
-          "&:hover": { opacity: 0.9, backgroundColor: stateColor },
+          "&:hover": { opacity: 0.9, backgroundColor: color },
         }}
       />
 
@@ -72,14 +80,11 @@ const ColorPicker = ({ sx, stateColor, setColorState }) => {
           >
             <TextField
               size="small"
-              value={inputColor.replace("#", "")}
-              onChange={(e) => {
-                setInputColor(e.target.value);
-              }}
+              value={inputColor}
+              onChange={(e) => setInputColor(e.target.value)}
               onKeyDown={(keyEvent) => {
                 if (keyEvent.key === "Enter") {
-                  setColorState(`#${inputColor}`);
-                  handleColorpickerClose();
+                  handleColorConfirm();
                 }
               }}
               sx={{
@@ -101,13 +106,8 @@ const ColorPicker = ({ sx, stateColor, setColorState }) => {
                     <IconButton
                       color="success"
                       size="small"
-                      sx={{
-                        p: 0.2,
-                      }}
-                      onClick={() => {
-                        setColorState(`#${inputColor}`);
-                        handleColorpickerClose();
-                      }}
+                      sx={{ p: 0.2 }}
+                      onClick={handleColorConfirm}
                     >
                       <CheckIcon fontSize="small" />
                     </IconButton>
@@ -123,9 +123,10 @@ const ColorPicker = ({ sx, stateColor, setColorState }) => {
           {/* Color Picker */}
           <Box>
             <HexColorPicker
-              color={stateColor}
+              color={color}
               onChange={(newColor) => {
-                setColorState(newColor);
+                setColor(newColor);
+                setInputColor(newColor.replace("#", ""));
               }}
             />
           </Box>

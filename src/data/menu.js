@@ -12,8 +12,6 @@ import AreaChart from "../pages/charts/AreaChart";
 import ScatterChart from "../pages/charts/ScatterChart";
 import CandleChart from "../pages/charts/CandleChart";
 import RadarChart from "../pages/charts/RadarChart";
-import GaugeChart from "../pages/charts/GaugeChart";
-import BoxPlot from "../pages/charts/BoxPlot";
 import HeatMap from "../pages/charts/HeatMap";
 import BasicForms from "../pages/forms/BasicForms";
 import FormValidations from "../pages/forms/FormValidations";
@@ -49,6 +47,8 @@ import ShapeFile from "../pages/maps/ShapeFile";
 import AnimatedRoutes from "../pages/maps/AnimatedRoutes";
 import BasicCanvas from "../pages/canvas/BasicCanvas";
 import CanvasSprite from "../pages/canvas/CanvasSprite";
+import BasicDiagram from "../pages/diagrams/BasicDiagram";
+import SankeyChart from "../pages/charts/SankeyChart";
 
 const menu = [
   {
@@ -310,109 +310,18 @@ const menu = [
         component: RadarChart,
       },
       {
-        name: "Gauge Chart",
-        route: "gauge-chart",
+        name: "Sankey Chart",
+        route: "sankey-chart",
         children: [],
-        component: GaugeChart,
+        component: SankeyChart,
       },
-      {
-        name: "Box Plot Chart",
-        route: "box-plot-chart",
-        children: [],
-        component: BoxPlot,
-      },
+
       {
         name: "Heat Map Chart",
         route: "heat-map-chart",
         children: [],
         component: HeatMap,
       },
-      // {
-      //   name: "3D Charts",
-      //   route: "3d-charts",
-      //   children: [
-      //     {
-      //       name: "3D Line Chart",
-      //       route: "3d-line-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Bar Chart",
-      //       route: "3d-bar-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Pie Chart",
-      //       route: "3d-pie-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Scatter Chart",
-      //       route: "3d-scatter-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Surface Chart",
-      //       route: "3d-surface-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Radar Chart",
-      //       route: "3d-radar-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Heat Map Chart",
-      //       route: "3d-heat-map-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Candlestick Chart",
-      //       route: "3d-candlestick-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Box Plot Chart",
-      //       route: "3d-box-plot-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Bubble Chart",
-      //       route: "3d-bubble-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Column Chart",
-      //       route: "3d-column-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Donut Chart",
-      //       route: "3d-donut-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Funnel Chart",
-      //       route: "3d-funnel-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Pyramid Chart",
-      //       route: "3d-pyramid-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Treemap Chart",
-      //       route: "3d-treemap-chart",
-      //       children: [],
-      //     },
-      //     {
-      //       name: "3D Waterfall Chart",
-      //       route: "3d-waterfall-chart",
-      //       children: [],
-      //     },
-      //   ],
-      // },
     ],
   },
   {
@@ -698,6 +607,12 @@ const menu = [
     name: "Diagramming Tools",
     route: "diagramming-tools",
     children: [
+      {
+        name: "Basic Diagram",
+        route: "basic-diagram",
+        children: [],
+        component: BasicDiagram,
+      },
       { name: "UML Diagram", route: "uml-diagram", children: [] },
       { name: "Network Diagram", route: "network-diagram", children: [] },
     ],

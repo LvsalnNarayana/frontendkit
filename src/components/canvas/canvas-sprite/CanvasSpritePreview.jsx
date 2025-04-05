@@ -4,22 +4,22 @@ import { Box, Stack, Typography } from "@mui/material";
 // Define actions and their frame counts (adjust based on your actual PNG files)
 const actions = [
   { name: "Dying", frameCount: 14 },
-  { name: "Falling Down", frameCount: 6 },
-  { name: "Hurt", frameCount: 6 },
-  { name: "Idle", frameCount: 6 },
-  { name: "Idle Blinking", frameCount: 6 },
-  { name: "Jump Loop", frameCount: 6 },
-  { name: "Jump Start", frameCount: 6 },
-  { name: "Kicking", frameCount: 6 },
-  { name: "Run Slashing", frameCount: 6 },
-  { name: "Run Throwing", frameCount: 6 },
-  { name: "Running", frameCount: 6 },
-  { name: "Slashing", frameCount: 6 },
-  { name: "Slashing in The Air", frameCount: 6 },
-  { name: "Sliding", frameCount: 6 },
-  { name: "Throwing", frameCount: 6 },
-  { name: "Throwing in The Air", frameCount: 6 },
-  { name: "Walking", frameCount: 6 },
+  { name: "Falling Down", frameCount: 5 },
+  { name: "Hurt", frameCount: 11 },
+  { name: "Idle", frameCount: 17 },
+  { name: "Idle Blinking", frameCount: 17 },
+  { name: "Jump Loop", frameCount: 5 },
+  { name: "Jump Start", frameCount: 5 },
+  { name: "Kicking", frameCount: 11 },
+  { name: "Run Slashing", frameCount: 11 },
+  { name: "Run Throwing", frameCount: 11 },
+  { name: "Running", frameCount: 11 },
+  { name: "Slashing", frameCount: 11 },
+  { name: "Slashing in The Air", frameCount: 11 },
+  { name: "Sliding", frameCount: 5 },
+  { name: "Throwing", frameCount: 11 },
+  { name: "Throwing in The Air", frameCount: 11 },
+  { name: "Walking", frameCount: 23 },
 ];
 
 const CanvasSpritePreview = () => {
@@ -29,8 +29,8 @@ const CanvasSpritePreview = () => {
     actions.forEach((action, index) => {
       const canvas = canvasRefs.current[index].current;
       const ctx = canvas.getContext("2d");
-      const frameWidth = 100; // Logical width (adjust to your sprite size)
-      const frameHeight = 100; // Logical height (adjust to your sprite size)
+      const frameWidth = 300; // Logical width (adjust to your sprite size)
+      const frameHeight = 300; // Logical height (adjust to your sprite size)
       let currentFrame = 0;
       let frameImages = [];
 
@@ -46,7 +46,7 @@ const CanvasSpritePreview = () => {
       const loadImages = () => {
         frameImages = Array.from({ length: action.frameCount }, (_, i) => {
           const img = new Image();
-          img.src = `/sprite/Goblin/PNG/PNG Sequences/${action.name}/0_Goblin_${action.name.replace(/\s+/g, "_")}_${String(i + 1).padStart(3, "0")}.png`;
+          img.src = `/sprite/Goblin/PNG/PNG Sequences/${action.name}/0_Goblin_${action.name}_${String(i + 1).padStart(3, "0")}.png`;
           console.log(`Loading: ${img.src}`); // Debug path
           img.onerror = () => console.error(`Failed to load image: ${img.src}`);
           return img;
