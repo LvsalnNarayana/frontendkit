@@ -3,13 +3,24 @@ import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Stack } from "@mui/material";
 import HeatMapLayer from "./HeatMapLayer";
 import earthQuakeDataJson from "./earthquakes.json";
-import emitter from "../../../utils/EventEmitter";
 import HeatmapMapControl from "./HeatmapMapControl";
 
 const HeatMapsPreview = () => {
-  const mapId = "heat-map";
-  const [radius, setRadius] = useState(25);
-  const [opacity, setOpacity] = useState(0.6);
+  const [mapSettings, setMapSettings] = useState({
+    id: "heat-map",
+    zoom: 5,
+    disableDefaultUI: true,
+    gestureHandling: "greedy",
+    disableDoubleClickZoom: false,
+    mapTypeId: "satellite",
+    minZoom: 3,
+    maxZoom: 20,
+    darkMode: false,
+    heatmapData: {
+      radius: 25,
+      opacity: 0.6,
+    },
+  });
   return (
     <Stack
       className="parent"
@@ -27,111 +38,21 @@ const HeatMapsPreview = () => {
         height="100%"
       >
         <Map
-          disableDefaultUI
-          onBoundsChanged={(event) => {
-            if (event?.map) {
-              const bounds = event.map.getBounds()?.toJSON();
-              const center = event.map.getCenter()?.toJSON();
-              const zoom = event.map.getZoom();
-              emitter.emit(
-                "log",
-                `\n📍 Bounds Changed:\n\n• Bounds: ${JSON.stringify(
-                  bounds,
-                  null,
-                  2
-                )}\n• Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n• Zoom: ${zoom}\n`
-              );
-            }
-          }}
-          onCameraChanged={(event) => {
-            if (event?.map) {
-              const heading = event.map.getHeading();
-              const tilt = event.map.getTilt();
-              const center = event.map.getCenter()?.toJSON();
-              const zoom = event.map.getZoom();
-              emitter.emit(
-                "log",
-                `\n🎥 Camera Changed:\n\n• Heading: ${heading}\n• Tilt: ${tilt}\n• Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n• Zoom: ${zoom}\n`
-              );
-            }
-          }}
-          onCenterChanged={(event) => {
-            if (event?.map) {
-              const center = event.map.getCenter()?.toJSON();
-              emitter.emit(
-                "log",
-                `\n🌍 Center Changed:\n\n• Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n`
-              );
-            }
-          }}
-          onDrag={(event) => {
-            if (event?.map) {
-              const center = event.map.getCenter()?.toJSON();
-              emitter.emit(
-                "log",
-                `\n🖱️ Dragging:\n\n• Current Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n`
-              );
-            }
-          }}
-          onDragEnd={(event) => {
-            if (event?.map) {
-              const center = event.map.getCenter()?.toJSON();
-              emitter.emit(
-                "log",
-                `\n✅ Drag End:\n\n• Final Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n`
-              );
-            }
-          }}
-          onDragStart={(event) => {
-            if (event?.map) {
-              const center = event.map.getCenter()?.toJSON();
-              emitter.emit(
-                "log",
-                `\n🚀 Drag Start:\n\n• Initial Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n`
-              );
-            }
-          }}
-          onZoomChanged={(event) => {
-            if (event?.map) {
-              const zoom = event.map.getZoom();
-              emitter.emit("log", `\n🔍 Zoom Changed:\n\n• Zoom: ${zoom}\n`);
-            }
-          }}
-          id={mapId}
-          style={{ width: "100%" }}
-          defaultCenter={{ lat: 22.54992, lng: 0 }}
-          minZoom={3}
-          maxZoom={15}
-          defaultZoom={3}
+          id={mapSettings.id}
+          width="100%"
+          height="100%"
+          defaultZoom={mapSettings.zoom}
+          disableDefaultUI={mapSettings.disableDefaultUI}
+          gestureHandling={mapSettings.gestureHandling}
+          minZoom={mapSettings.minZoom}
+          maxZoom={mapSettings.maxZoom}
+          mapTypeId={mapSettings.mapTypeId}
+          disableDoubleClickZoom={mapSettings.disableDoubleClickZoom}
         >
           <HeatMapLayer
-            id={mapId}
-            radius={radius}
-            opacity={opacity}
+            mapId={mapSettings.id}
+            radius={mapSettings?.heatmapData?.radius}
+            opacity={mapSettings?.heatmapData?.opacity}
             data={earthQuakeDataJson}
           />
         </Map>
@@ -144,11 +65,8 @@ const HeatMapsPreview = () => {
         overflow="auto"
       >
         <HeatmapMapControl
-          id={mapId}
-          radius={radius}
-          opacity={opacity}
-          setRadius={setRadius}
-          setOpacity={setOpacity}
+          mapSettings={mapSettings}
+          setMapSettings={setMapSettings}
         />
       </Stack>
     </Stack>

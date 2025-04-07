@@ -1,131 +1,58 @@
 import { Stack } from "@mui/material";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
-import React, { useEffect } from "react";
-import EventLogger from "../../shared/EventLogger";
+import React, { useEffect, useState } from "react";
 import emitter from "../../../utils/EventEmitter";
 import MapControls from "./MapControls";
 
 const BasicMapPreview = () => {
-  const mapId = "basic-map";
+  // IMPORTANT: Replace this with your actual Google Maps Map ID that has 3D buildings enabled
+  const mapId = "YOUR_CUSTOM_MAP_ID_WITH_3D_BUILDINGS";
+
+  const [mapSettings, setMapSettings] = useState({
+    mapId: mapId,
+    center: { lat: 40.748817, lng: -73.985428 }, // Example: NYC (Empire State Building)
+    zoom: 18,
+    disableDefaultUI: true,
+    gestureHandling: "greedy",
+    disableDoubleClickZoom: false,
+    mapTypeId: "satellite",
+    minZoom: 3,
+    maxZoom: 20,
+  });
+
   useEffect(() => {
-    emitter.emit("log", "Basic Map...");
+    emitter.emit("log", "Basic Map with 3D buildings...");
   }, []);
+
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_KEY}>
       <Stack flexGrow={1} direction={"row"} width={"100%"} height={"100%"}>
         <Map
-          disableDefaultUI
-          onBoundsChanged={(event) => {
-            if (event?.map) {
-              const bounds = event.map.getBounds()?.toJSON();
-              const center = event.map.getCenter()?.toJSON();
-              const zoom = event.map.getZoom();
-              emitter.emit(
-                "log",
-                `\n📍 Bounds Changed:\n\n• Bounds: ${JSON.stringify(
-                  bounds,
-                  null,
-                  2
-                )}\n• Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n• Zoom: ${zoom}\n`
-              );
-            }
-          }}
-          onCameraChanged={(event) => {
-            if (event?.map) {
-              const heading = event.map.getHeading();
-              const tilt = event.map.getTilt();
-              const center = event.map.getCenter()?.toJSON();
-              const zoom = event.map.getZoom();
-              emitter.emit(
-                "log",
-                `\n🎥 Camera Changed:\n\n• Heading: ${heading}\n• Tilt: ${tilt}\n• Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n• Zoom: ${zoom}\n`
-              );
-            }
-          }}
-          onCenterChanged={(event) => {
-            if (event?.map) {
-              const center = event.map.getCenter()?.toJSON();
-              emitter.emit(
-                "log",
-                `\n🌍 Center Changed:\n\n• Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n`
-              );
-            }
-          }}
-          onDrag={(event) => {
-            if (event?.map) {
-              const center = event.map.getCenter()?.toJSON();
-              emitter.emit(
-                "log",
-                `\n🖱️ Dragging:\n\n• Current Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n`
-              );
-            }
-          }}
-          onDragEnd={(event) => {
-            if (event?.map) {
-              const center = event.map.getCenter()?.toJSON();
-              emitter.emit(
-                "log",
-                `\n✅ Drag End:\n\n• Final Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n`
-              );
-            }
-          }}
-          onDragStart={(event) => {
-            if (event?.map) {
-              const center = event.map.getCenter()?.toJSON();
-              emitter.emit(
-                "log",
-                `\n🚀 Drag Start:\n\n• Initial Center: ${JSON.stringify(
-                  center,
-                  null,
-                  2
-                )}\n`
-              );
-            }
-          }}
-          onZoomChanged={(event) => {
-            if (event?.map) {
-              const zoom = event.map.getZoom();
-              emitter.emit("log", `\n🔍 Zoom Changed:\n\n• Zoom: ${zoom}\n`);
-            }
-          }}
-          id={mapId}
-          style={{ width: "100%" }}
-          defaultCenter={{ lat: 22.54992, lng: 0 }}
-          minZoom={3}
-          maxZoom={15}
-          defaultZoom={3}
+          id={mapSettings.mapId}
+          mapId={mapSettings.mapId}
+          width="100%"
+          height="100%"
+          defaultCenter={mapSettings.center}
+          defaultZoom={mapSettings.zoom}
+          disableDefaultUI={mapSettings.disableDefaultUI}
+          gestureHandling={mapSettings.gestureHandling}
+          minZoom={mapSettings.minZoom}
+          maxZoom={mapSettings.maxZoom}
+          mapTypeId={mapSettings.mapTypeId}
+          disableDoubleClickZoom={mapSettings.disableDoubleClickZoom}
         />
         <Stack
-          width={350}
+          width={450}
           flexGrow={1}
           sx={{ overflow: "hidden", height: "100%" }}
           pl={1}
         >
-          <Stack height="50%">
-            <MapControls id={mapId} />
-          </Stack>
-          <Stack height="50%">
-            <EventLogger />
+          <Stack height="100%">
+            <MapControls
+              id={mapId}
+              mapSettings={mapSettings}
+              setMapSettings={setMapSettings}
+            />
           </Stack>
         </Stack>
       </Stack>

@@ -22,7 +22,12 @@ const CustomSwitch = ({
   };
 
   return (
-    <Stack spacing={1.5} width="100%">
+    <Stack
+      sx={{
+        my: 1,
+      }}
+      width="100%"
+    >
       <FormControl fullWidth error={error} disabled={disabled}>
         {label && (
           <Stack

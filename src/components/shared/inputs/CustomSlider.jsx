@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 
 const CustomSlider = ({
+  id,
   name,
   label,
   value,
@@ -30,7 +31,12 @@ const CustomSlider = ({
   };
 
   return (
-    <Stack spacing={1.5} width="100%">
+    <Stack
+      width="100%"
+      sx={{
+        my: 1,
+      }}
+    >
       <FormControl fullWidth error={error} disabled={disabled}>
         {label && (
           <Stack
@@ -38,10 +44,10 @@ const CustomSlider = ({
             justifyContent={"space-between"}
             alignItems={"center"}
           >
-            <Typography variant="body1" fontWeight={400} fontSize={14} mb={1}>
+            <Typography variant="body1" fontWeight={400} fontSize={14}>
               {label}
             </Typography>
-            <Typography variant="body1" fontWeight={400} fontSize={14} mb={1}>
+            <Typography variant="body1" fontWeight={400} fontSize={14}>
               {value}
             </Typography>
           </Stack>
@@ -49,6 +55,7 @@ const CustomSlider = ({
 
         <Box>
           <Slider
+            id={id ? id : name}
             name={name}
             value={value}
             min={min}

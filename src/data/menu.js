@@ -49,6 +49,8 @@ import BasicCanvas from "../pages/canvas/BasicCanvas";
 import CanvasSprite from "../pages/canvas/CanvasSprite";
 import BasicDiagram from "../pages/diagrams/BasicDiagram";
 import SankeyChart from "../pages/charts/SankeyChart";
+import SubFlow from "../pages/flow/SubFlow";
+import FlowDnd from '../pages/flow/FlowDnd';
 
 const menu = [
   {
@@ -242,6 +244,12 @@ const menu = [
         component: BasicFlow,
       },
       {
+        name: "Sub Flow",
+        route: "sub-flow",
+        children: [],
+        component: SubFlow,
+      },
+      {
         name: "Resizable Nodes",
         route: "resizable-nodes",
         children: [],
@@ -255,6 +263,7 @@ const menu = [
         name: "Drag and Drop",
         route: "drag-and-drop",
         children: [],
+        component: FlowDnd
       },
       {
         name: "Complex Examples",

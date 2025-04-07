@@ -26,7 +26,12 @@ const CustomSelectInput = ({
   };
 
   return (
-    <Stack spacing={2} width={fullWidth ? "100%" : "30%"}>
+    <Stack
+      width={"100%"}
+      sx={{
+        my: 1,
+      }}
+    >
       <FormControl
         size={size}
         error={error}
@@ -60,7 +65,7 @@ const CustomSelectInput = ({
             PaperProps: {
               sx: {
                 [`&.${paperClasses.root}`]: {
-                  ml: -1,
+                  mt: 0.5,
                   borderRadius: 1,
                   marginTop: "2px",
                   boxShadow: "none",

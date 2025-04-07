@@ -1,21 +1,24 @@
 import { Stack } from "@mui/material";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-import React, { useEffect, useState } from "react";
-import EventLogger from "../../shared/EventLogger";
-import emitter from "../../../utils/EventEmitter";
+import React, { useState } from "react";
 import MapMarkerControls from "./MapMarkerControls";
 
 const BasicMarkerPreview = () => {
-  const mapId = "basic-marker";
-
-  const [markerPosition, setMarkerPosition] = useState({
-    lat: 37.7749,
-    lng: -122.4194,
+  const [mapSettings, setMapSettings] = useState({
+    id: "basic-marker",
+    center: { lat: 40.748817, lng: -73.985428 },
+    zoom: 5,
+    disableDefaultUI: true,
+    gestureHandling: "greedy",
+    disableDoubleClickZoom: false,
+    mapTypeId: "satellite",
+    minZoom: 3,
+    maxZoom: 20,
+    markerPosition: { lat: 37.7749, lng: -122.4194 },
+    markerColor: "red",
+    markerLabel: "A",
   });
 
-  useEffect(() => {
-    emitter.emit("log", "Started Listening to Basic Marker...");
-  }, []);
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_KEY}>
       <Stack
@@ -34,58 +37,49 @@ const BasicMarkerPreview = () => {
           height="100%"
         >
           <Map
-            onBoundsChanged={(event) => {
-              if (event?.map) {
-                const bounds = event.map.getBounds()?.toJSON();
-                const center = event.map.getCenter()?.toJSON();
-                const zoom = event.map.getZoom();
-                emitter.emit(
-                  "log",
-                  `\n📍 Bounds Changed:\n\n• Bounds: ${JSON.stringify(
-                    bounds,
-                    null,
-                    2
-                  )}\n• Center: ${JSON.stringify(
-                    center,
-                    null,
-                    2
-                  )}\n• Zoom: ${zoom}\n`
-                );
-              }
+            id={mapSettings.id}
+            mapId={mapSettings.mapId}
+            width="100%"
+            height="100%"
+            defaultCenter={mapSettings.center}
+            defaultZoom={mapSettings.zoom}
+            disableDefaultUI={mapSettings.disableDefaultUI}
+            gestureHandling={mapSettings.gestureHandling}
+            minZoom={mapSettings.minZoom}
+            maxZoom={mapSettings.maxZoom}
+            mapTypeId={mapSettings.mapTypeId}
+            disableDoubleClickZoom={mapSettings.disableDoubleClickZoom}
+            onClick={(e) => {
+              setMapSettings({
+                ...mapSettings,
+                markerPosition: {
+                  lat: e.latLng.lat(),
+                  lng: e.latLng.lng(),
+                },
+              });
             }}
-            id={mapId}
-            style={{ width: "100%", height: "100%" }}
-            defaultCenter={{ lat: 22.54992, lng: 0 }}
-            minZoom={3}
-            maxZoom={15}
-            defaultZoom={3}
           >
-            <Marker position={markerPosition} />
+            <Marker
+              position={{
+                lat: mapSettings.markerPosition.lat,
+                lng: mapSettings.markerPosition.lng,
+              }}
+            />
           </Map>
         </Stack>
 
         {/* Map Controls Section (Fixed position) */}
         <Stack
           className="div2"
-          gridArea="1 / 7 / 3 / 9"
+          gridArea="1 / 7 / 5/ 9"
           width="100%"
           height="100%"
           overflow="auto"
         >
           <MapMarkerControls
-            id={mapId}
-            markerPosition={markerPosition}
-            setMarkerPosition={setMarkerPosition}
+            mapSettings={mapSettings}
+            setMapSettings={setMapSettings}
           />
-        </Stack>
-        <Stack
-          className="div3"
-          gridArea="3 / 7 / 5 / 9"
-          width="100%"
-          height="100%"
-          overflow="auto"
-        >
-          <EventLogger />
         </Stack>
       </Stack>
     </APIProvider>
